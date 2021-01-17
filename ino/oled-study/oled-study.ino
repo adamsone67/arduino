@@ -1,41 +1,39 @@
 #include <Arduino.h>
-#include <U8g2lib.h>
+#include <U8x8lib.h>
+#include <dht.h>
 
-#ifdef U8X8_HAVE_HW_SPI
-#include <SPI.h>
-#endif
-#ifdef U8X8_HAVE_HW_I2C
-#include <Wire.h>
-#endif
+#define DHT11_PIN 3
 
-U8G2_SSD1306_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, /* reset=*/ U8X8_PIN_NONE, /* clock=*/ 16, /* data=*/ 17);   // ESP32 Thing, HW I2C with pin remapping
+U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE);
+dht DHT;
 
-int dir = 2;
-
-int X_OFFSET = 56;
-int Y_OFFSET = 126;
+byte temp = 0;
+byte hum = 0;
 
 void setup(void) {
-  pinMode(9, OUTPUT);
-  digitalWrite(9, 0);	// default output in I2C mode for the SSD1306 test shield: set the i2c adr to 0
-
-  u8g2.begin();
-}
-
-void drawLogo(void) {
-  u8g2.setFontMode(1);	// Transparent
-  u8g2.setFontDirection(dir);
-  u8g2.setFont(u8g2_font_luBS18_tn);
-  drawText("ABC", 0, 0);
-}
-
-void drawText(String text, int x, int y) {
-  u8g2.drawStr(X_OFFSET-x,Y_OFFSET-y,text[0]);
+  initDisplay();
 }
 
 void loop(void) {
-  u8g2.clearBuffer();
-  drawLogo();
-  u8g2.sendBuffer();
-  delay(1000);
+  readSensor();
+  updateDisplay();
+  delay(2000);
+}
+
+void readSensor() {
+  DHT.read11(DHT11_PIN);
+}
+
+void initDisplay() {
+  u8x8.begin();
+  u8x8.setFlipMode(1);
+  u8x8.setFont(u8x8_font_pxplustandynewtv_u);
+}
+
+void updateDisplay() {
+  u8x8.drawString(0, 0, "TEMP: ");
+  u8x8.drawString(6, 0, String(DHT.temperature).c_str());
+  u8x8.drawString(0, 1, " HUM: ");
+  u8x8.drawString(6, 1, String(DHT.humidity).c_str());
+  u8x8.refreshDisplay();
 }
