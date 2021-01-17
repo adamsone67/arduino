@@ -14,11 +14,13 @@ byte temp = 0;
 byte hum = 0;
 float pressure = 0.0;
 
+// runs once, upon startup
 void setup(void) {
   initSensors();
   initDisplay();
 }
 
+// runs repeatedly, forever after
 void loop(void) {
   readSensors();
   updateDisplay();
