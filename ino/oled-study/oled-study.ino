@@ -32,8 +32,9 @@ void initDisplay() {
 
 void updateDisplay() {
   u8x8.drawString(0, 0, "TEMP: ");
-  u8x8.drawString(6, 0, String(DHT.temperature).c_str());
+  float fahrenheitTemp = (DHT.temperature * 1.8) + 32;
+  u8x8.drawString(6, 0, String((int) fahrenheitTemp).c_str());
   u8x8.drawString(0, 1, " HUM: ");
-  u8x8.drawString(6, 1, String(DHT.humidity).c_str());
+  u8x8.drawString(6, 1, String((int) DHT.humidity).c_str());
   u8x8.refreshDisplay();
 }
