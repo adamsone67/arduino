@@ -17,5 +17,5 @@ void setup() {
 
 void loop() {
   freq = analogRead(KNOB);
-  tone(BUZZER, 4 * (1124-freq));  
+  tone(BUZZER, (1124-freq));  
 }
