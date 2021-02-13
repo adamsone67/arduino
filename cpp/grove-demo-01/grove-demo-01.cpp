@@ -2,7 +2,7 @@
 
 const int LED=4;
 
-// downstream declarations (stinky old one-pass compilers require these!)
+// forward declarations (stinky old one-pass compilers require these!)
 void blink(int device, int delayTime);
 
 void setup() {
