@@ -18,7 +18,11 @@
  *  as a quick & dirty experiment, in hopes of coming up with a practical
  *  application of the kit.
  *  
- *  Due to it's lack
+ *  While the Grove Beginner Kit comes with a nice collection of sensors,
+ *  it lacks a rotary encoder for menu navigation. Instead, we use an analog
+ *  potentiometer, proportionally dividing its 1024-step range among menu
+ *  items. Additionally, the menu is monitored by polling, rather than
+ *  interrupts, mainly to keep things simple.
  */
 
 U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE);
