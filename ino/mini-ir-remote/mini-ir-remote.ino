@@ -5,6 +5,9 @@
 /*
  *  Mini IR Remote
  *  
+ *   Author: Eric Adamson
+ *  Updated: 2/20/2020
+ *  
  *  A super-simple infrared remote implementation.
  *  
  *  Requires the following hardware:
@@ -28,8 +31,8 @@
 U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE);
 IRsend IrSender;
 
-char* menu[] = { "ON/OFF", "SOURCE", "MUTE", "VOL+", "VOL-", "CHAN+", "CHAN-" };
-uint8_t codes[] = { 0x0C, 0x38, 0x0D, 0x10, 0x11, 0x20, 0x21 };
+char* menu[] = { "ON/OFF", "MUTE", "VOL+", "VOL-", "SOURCE", "LEFT", "RIGHT", "ENTER" };
+uint8_t codes[] = { 0x0C, 0x0D, 0x10, 0x11, 0x38, 0x5A, 0x5B, 0x5C };
 
 int KNOB = A0;
 int BTN = 6;
