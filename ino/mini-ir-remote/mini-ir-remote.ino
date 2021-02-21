@@ -28,20 +28,31 @@
  *  interrupts, mainly to keep things simple.
  */
 
+int KNOB = A0;          // potentiometer
+int BTN = 6;            // pushbutton
+
 U8X8_SSD1306_128X64_NONAME_HW_I2C u8x8(/* reset=*/ U8X8_PIN_NONE);
 IRsend IrSender;
 
-char* menu[] = { "ON/OFF", "MUTE", "VOL+", "VOL-", "SOURCE", "LEFT", "RIGHT", "ENTER" };
+char* menu[] = {
+  " ON/OFF ",
+  " MUTE   ",
+  " VOL+   ",
+  " VOL-   ",
+  " SOURCE ",
+  " LEFT   ",
+  " RIGHT  ",
+  " ENTER  "
+};
+  
 uint8_t codes[] = { 0x0C, 0x0D, 0x10, 0x11, 0x38, 0x5A, 0x5B, 0x5C };
 
-int KNOB = A0;
-int BTN = 6;
 int menuPos = 0;
-int arrayLen = 0;
+int menuSize = 0;
 boolean buttonPressed = false;
 
 void setup() {
-  arrayLen = sizeof(menu)/sizeof(char*);
+  menuSize = sizeof(menu)/sizeof(char*);
   pinMode(KNOB, INPUT);
   pinMode(BTN, INPUT);
   initOLED();
@@ -68,8 +79,8 @@ void checkButton() {
 }
 
 void updateMenu() {
-  menuPos=arrayLen * analogRead(KNOB)/1024;
-  for (int i=0; i<arrayLen ; i++) {
+  menuPos=menuSize * analogRead(KNOB)/1024;
+  for (int i=0; i<menuSize ; i++) {
     u8x8.noInverse();
     if (menuPos==i) u8x8.inverse();
     u8x8.drawString(0,i,menu[i]);
